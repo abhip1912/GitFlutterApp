@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:git_users/models/user.dart';
 import 'package:git_users/models/users.dart';
 import 'package:git_users/providers/user_provider.dart';
 import 'package:git_users/widgets/user_info.dart';
