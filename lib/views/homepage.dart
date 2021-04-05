@@ -16,14 +16,23 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     setState(() {
-      Provider.of<UsersProvider>(context, listen: false)
-          .fetchUsers()
-          .then((value) => print(value));
+      Provider.of<UsersProvider>(context, listen: false).fetchUsers();
     });
+  }
+
+  bool isLoading = false;
+
+  Future _loadMore() async {
+    await Provider.of<UsersProvider>(context, listen: false)
+        .fetchUsers()
+        .then((_) => setState(() {
+              isLoading = false;
+            }));
   }
 
   @override
   Widget build(BuildContext context) {
+    print('Build method of homepage.');
     final users = Provider.of<UsersProvider>(context);
     return Column(
       children: [
@@ -47,9 +56,33 @@ class _HomePageState extends State<HomePage> {
         //   height: 0,
         // ),
         Expanded(
-          child: ListView.builder(
-            itemBuilder: (ctx, i) => ListItem(users.users[i]),
-            itemCount: users.users.length,
+          child: Column(
+            children: [
+              Expanded(
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification scrollInfo) {
+                    if (!isLoading &&
+                        scrollInfo.metrics.pixels ==
+                            scrollInfo.metrics.maxScrollExtent) {
+                      _loadMore();
+                      setState(() {
+                        isLoading = true;
+                      });
+                    }
+                  },
+                  child: ListView.builder(
+                    itemBuilder: (ctx, i) => ListItem(users.users[i]),
+                    itemCount: users.users.length,
+                  ),
+                ),
+              ),
+              Container(
+                height: isLoading ? 50.0 : 0.0,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            ],
           ),
         ),
       ],

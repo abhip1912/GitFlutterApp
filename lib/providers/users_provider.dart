@@ -4,14 +4,16 @@ import 'package:git_users/models/users.dart';
 import 'package:http/http.dart' as http;
 
 class UsersProvider with ChangeNotifier {
+  int sinceCount = 0;
+
   List<Users> _users = [];
 
   List<Users> get users {
     return [..._users];
   }
 
-  fetchUsers() async {
-    var url = 'https://api.github.com/users?since=0';
+  Future fetchUsers() async {
+    var url = 'https://api.github.com/users?since=$sinceCount';
     var resp = await http.get(Uri.parse(url));
     List<Users> users = [];
     if (resp.statusCode == 200) {
@@ -20,7 +22,10 @@ class UsersProvider with ChangeNotifier {
         users.add(Users.fromJson(userJson));
       }
     }
-    _users = users;
-    notifyListeners();
+    if (users.length != 0) {
+      _users.addAll(users);
+      sinceCount = _users[_users.length - 1].id;
+      notifyListeners();
+    }
   }
 }

@@ -4,8 +4,25 @@ import 'package:git_users/providers/user_provider.dart';
 import 'package:git_users/widgets/user_info.dart';
 import 'package:provider/provider.dart';
 
-class UserDetail extends StatelessWidget {
+class UserDetail extends StatefulWidget {
   static final routeName = '/user-detail';
+
+  @override
+  _UserDetailState createState() => _UserDetailState();
+}
+
+class _UserDetailState extends State<UserDetail> {
+  var _isInit = true;
+  @override
+  void didChangeDependencies() async {
+    if (_isInit) {
+      final Users user = ModalRoute.of(context).settings.arguments;
+      await Provider.of<UserProvider>(context).fetchUserInfo(user.url);
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Users user = ModalRoute.of(context).settings.arguments;
@@ -24,14 +41,8 @@ class UserDetail extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          FutureBuilder(
-            future: Provider.of<UserProvider>(context).fetchUserInfo(user.url),
-            builder: (ctx, snapshot) => snapshot.connectionState ==
-                    ConnectionState.waiting
-                ? Center(child: CircularProgressIndicator())
-                : Consumer<UserProvider>(
-                    builder: (_, data, ch) => UserInfo(data.userInfo[user.id])),
-          )
+          Consumer<UserProvider>(
+              builder: (_, data, ch) => UserInfo(data.userInfo[user.id])),
         ],
       ),
     );
