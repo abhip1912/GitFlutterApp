@@ -7,7 +7,16 @@ class UserInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return user == null
-        ? Container()
+        ? Container(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                CircularProgressIndicator(),
+              ],
+            ),
+          )
         : Container(
             margin: EdgeInsets.all(15),
             child: Column(children: [
