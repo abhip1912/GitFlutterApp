@@ -6,10 +6,17 @@ import 'package:http/http.dart' as http;
 class UsersProvider with ChangeNotifier {
   int sinceCount = 0;
 
+  String userName = '';
+
   List<Users> _users = [];
 
   List<Users> get users {
-    return [..._users];
+    return _users.where((element) => element.login.contains(userName)).toList();
+  }
+
+  void updateUserName(String name) {
+    userName = name;
+    notifyListeners();
   }
 
   Future fetchUsers() async {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:git_users/providers/users_provider.dart';
+import 'package:provider/provider.dart';
 
 class SearchBar extends StatelessWidget {
   @override
@@ -9,7 +11,8 @@ class SearchBar extends StatelessWidget {
       child: TextField(
         keyboardType: TextInputType.text,
         style: TextStyle(height: 2.0),
-        onChanged: (value) => print(value),
+        onChanged: (value) => Provider.of<UsersProvider>(context, listen: false)
+            .updateUserName(value),
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(
