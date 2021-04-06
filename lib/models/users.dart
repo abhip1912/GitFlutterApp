@@ -19,4 +19,15 @@ class Users {
     url = jsonData['url'];
     type = jsonData['type'];
   }
+
+  Map<String, dynamic> toJson() {
+    var jsonData = <String, dynamic>{
+      'login': login,
+      'id': id,
+      'avatarUrl': avatarUrl,
+      'url': url,
+      'type': type,
+    };
+    return jsonData;
+  }
 }

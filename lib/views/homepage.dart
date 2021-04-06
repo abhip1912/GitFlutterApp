@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:git_users/models/users.dart';
 import 'package:git_users/providers/users_provider.dart';
 import 'package:git_users/widgets/list_item.dart';
 import 'package:git_users/widgets/search_bar.dart';
@@ -45,6 +46,11 @@ class _HomePageState extends State<HomePage> {
                 height: 30,
               ),
               SearchBar(),
+              IconButton(
+                  onPressed: () =>
+                      Provider.of<UsersProvider>(context, listen: false)
+                          .deleteAll(),
+                  icon: Icon(Icons.delete)),
             ],
           ),
         ),

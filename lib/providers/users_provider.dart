@@ -1,14 +1,15 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:git_users/DBHelper/db_helper.dart';
 import 'package:git_users/models/users.dart';
 import 'package:http/http.dart' as http;
 
 class UsersProvider with ChangeNotifier {
   int sinceCount = 0;
-
   String userName = '';
-
   List<Users> _users = [];
+
+  var dbHelper = DBHelper();
 
   List<Users> get users {
     return _users.where((element) => element.login.contains(userName)).toList();
@@ -16,6 +17,13 @@ class UsersProvider with ChangeNotifier {
 
   void updateUserName(String name) {
     userName = name;
+    notifyListeners();
+  }
+
+  void deleteAll() {
+    _users = [];
+    sinceCount = 0;
+    dbHelper.deleteAllRecords();
     notifyListeners();
   }
 
@@ -33,6 +41,7 @@ class UsersProvider with ChangeNotifier {
       _users.addAll(users);
       sinceCount = _users[_users.length - 1].id;
       notifyListeners();
+      dbHelper.save(users);
     }
   }
 }

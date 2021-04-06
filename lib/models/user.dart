@@ -1,4 +1,6 @@
-class User {
+import 'package:flutter/material.dart';
+
+class User with ChangeNotifier {
   String login;
   int id;
   String nodeId;
@@ -19,6 +21,7 @@ class User {
   int following;
   DateTime createdAt;
   DateTime updatedAt;
+  String _note = "";
 
   // User({
   //   this.login,
@@ -43,6 +46,12 @@ class User {
   //   this.updatedAt,
   // });
 
+  void updateNote(String txt) {
+    _note = txt;
+  }
+
+  String get note => _note;
+
   User.fromJson(Map<String, dynamic> jsonData) {
     login = jsonData["login"];
     id = jsonData["id"];
@@ -64,5 +73,32 @@ class User {
     following = jsonData["following"];
     createdAt = DateTime.parse(jsonData["created_at"]);
     updatedAt = DateTime.parse(jsonData["updated_at"]);
+  }
+
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+      "login": login,
+      "id": id,
+      "node_id": nodeId,
+      "avtarUrl": avatarUrl,
+      "type": type,
+      "site_admin": siteAdmin,
+      "name": name,
+      "company": company,
+      "blog": blog,
+      "location": location,
+      "email": email,
+      "hireable": hireable,
+      "bio": bio,
+      "twitter_username": twitterUsername,
+      "public_repos": publicRepos,
+      "public_gists": publicGists,
+      "followers": followers,
+      "following": following,
+      "created_at": createdAt.toIso8601String(),
+      "updated_at": updatedAt.toIso8601String(),
+      "note": _note,
+    };
+    return map;
   }
 }

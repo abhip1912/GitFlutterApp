@@ -10,7 +10,7 @@ class SearchBar extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: TextField(
         keyboardType: TextInputType.text,
-        style: TextStyle(height: 2.0),
+        style: TextStyle(height: 2.0, fontSize: 18),
         onChanged: (value) => Provider.of<UsersProvider>(context, listen: false)
             .updateUserName(value),
         decoration: InputDecoration(
