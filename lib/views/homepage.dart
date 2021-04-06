@@ -61,7 +61,8 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: NotificationListener<ScrollNotification>(
                   onNotification: (ScrollNotification scrollInfo) {
-                    if (!isLoading &&
+                    if (users.userName == "" &&
+                        !isLoading &&
                         scrollInfo.metrics.pixels ==
                             scrollInfo.metrics.maxScrollExtent) {
                       _loadMore();
