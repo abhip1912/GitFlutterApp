@@ -27,32 +27,31 @@ class UsersProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void fetchDB() async {
-    _users = await dbHelper.getUsers();
-    print(_users);
-    notifyListeners();
+  Future fetchDB() async {
+    if (dbHelper.db != null) {
+      _users = await dbHelper.getUsers();
+      print(_users);
+      notifyListeners();
+    }
   }
 
   Future fetchUsers() async {
-    fetchDB();
-    try {
-      var url = 'https://api.github.com/users?since=$sinceCount';
-      var resp = await http.get(Uri.parse(url));
-      List<Users> users = [];
-      if (resp.statusCode == 200) {
-        List<dynamic> usersJson = json.decode(resp.body);
-        for (var userJson in usersJson) {
-          users.add(Users.fromJson(userJson));
-        }
+    // await fetchDB();
+
+    var url = 'https://api.github.com/users?since=$sinceCount';
+    var resp = await http.get(Uri.parse(url));
+    List<Users> users = [];
+    if (resp.statusCode == 200) {
+      List<dynamic> usersJson = json.decode(resp.body);
+      for (var userJson in usersJson) {
+        users.add(Users.fromJson(userJson));
       }
-      if (users.length != 0) {
-        _users.addAll(users);
-        sinceCount = _users[_users.length - 1].id;
-        notifyListeners();
-        dbHelper.save(users);
-      }
-    } catch (e) {
-      print("Error" + e);
+    }
+    if (users.length != 0) {
+      _users.addAll(users);
+      sinceCount = _users[_users.length - 1].id;
+      notifyListeners();
+      dbHelper.save(users);
     }
   }
 }
