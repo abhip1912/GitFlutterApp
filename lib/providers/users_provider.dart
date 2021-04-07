@@ -33,6 +33,9 @@ class UsersProvider with ChangeNotifier {
     var db = await dbHelper.db;
     if (db != null) {
       _users = await dbHelper.getUsers();
+      var lastId = await dbHelper.getLastId();
+      sinceCount = lastId == null ? 0 : lastId;
+      print(sinceCount);
       notifyListeners();
     }
     var url = 'https://api.github.com/users?since=$sinceCount';

@@ -31,19 +31,21 @@ class _UserDetailState extends State<UserDetail> {
         title: Text(user.login),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Container(
-            height: 300,
-            width: double.infinity,
-            child: Image.network(
-              user.avatarUrl,
-              fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 300,
+              width: double.infinity,
+              child: Image.network(
+                user.avatarUrl,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          Consumer<UserProvider>(
-              builder: (_, data, ch) => UserInfo(data.userInfo[user.id])),
-        ],
+            Consumer<UserProvider>(
+                builder: (_, data, ch) => UserInfo(data.userInfo[user.id])),
+          ],
+        ),
       ),
     );
   }

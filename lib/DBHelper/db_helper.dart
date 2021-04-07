@@ -81,7 +81,12 @@ class DBHelper {
     var dbClient = await db;
     List<Map> res = await dbClient
         .rawQuery("SELECT $ID FROM $TABLE ORDER BY $ID DESC LIMIT 1");
-    return res[0]['id'];
+    print("myLog: Sending the last id: ");
+    if (res.length > 0) {
+      print(res[0][ID]);
+      return res[0][ID];
+    }
+    return 0;
   }
 
   deleteAllRecords() async {
