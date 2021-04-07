@@ -27,17 +27,14 @@ class UsersProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future fetchDB() async {
-    if (dbHelper.db != null) {
-      _users = await dbHelper.getUsers();
-      print(_users);
-      notifyListeners();
-    }
-  }
+  fetchDB() async {}
 
   Future fetchUsers() async {
-    // await fetchDB();
-
+    var db = await dbHelper.db;
+    if (db != null) {
+      _users = await dbHelper.getUsers();
+      notifyListeners();
+    }
     var url = 'https://api.github.com/users?since=$sinceCount';
     var resp = await http.get(Uri.parse(url));
     List<Users> users = [];

@@ -32,7 +32,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print('Build method of homepage.');
     final users = Provider.of<UsersProvider>(context);
     return Column(
       children: [

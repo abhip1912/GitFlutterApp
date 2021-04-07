@@ -24,7 +24,7 @@ class Users {
     var jsonData = <String, dynamic>{
       'login': login,
       'id': id,
-      'avatarUrl': avatarUrl,
+      'avatar_url': avatarUrl,
       'url': url,
       'type': type,
     };

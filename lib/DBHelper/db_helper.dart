@@ -10,7 +10,7 @@ class DBHelper {
   //Columns
   static const String ID = 'id';
   static const String LOGIN = 'login';
-  static const String AVATAR_URL = 'avatarUrl';
+  static const String AVATAR_URL = 'avatar_url';
   static const String URL = 'url';
   static const String TYPE = 'type';
   //Database-Table
@@ -29,7 +29,6 @@ class DBHelper {
   initDb() async {
     //Get the document directory of devices
     io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    print("Path is : " + documentsDirectory.path);
     // Path is : /data/user/0/com.example.git_users/app_flutter
 
     //Make a path for database
@@ -48,7 +47,6 @@ class DBHelper {
 
   //Insert the data into database
   void save(List<Users> usersList) async {
-    print("Saving into the database...");
     var dbClient = await db;
     Batch batch = dbClient.batch();
     usersList.forEach((element) {
@@ -83,8 +81,6 @@ class DBHelper {
     var dbClient = await db;
     List<Map> res = await dbClient
         .rawQuery("SELECT $ID FROM $TABLE ORDER BY $ID DESC LIMIT 1");
-    print(res[0]['id']);
-    print(res[0]['id'].runtimeType);
     return res[0]['id'];
   }
 
