@@ -1,5 +1,9 @@
+import 'dart:async';
+
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:git_users/providers/users_provider.dart';
+import 'package:git_users/widgets/check_network.dart';
 import 'package:git_users/widgets/list_item.dart';
 import 'package:git_users/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
@@ -15,9 +19,16 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    CheckNetwork().checkConnection(context);
     setState(() {
       Provider.of<UsersProvider>(context, listen: false).fetchUsers();
     });
+  }
+
+  @override
+  void dispose() {
+    CheckNetwork().listener.cancel();
+    super.dispose();
   }
 
   bool isLoading = false;
@@ -52,13 +63,6 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        // // Divider(
-        // //   height: 0,
-        // //   thickness: 3,
-        // // ),
-        // SizedBox(
-        //   height: 0,
-        // ),
         Expanded(
           child: Column(
             children: [
@@ -69,10 +73,22 @@ class _HomePageState extends State<HomePage> {
                         !isLoading &&
                         scrollInfo.metrics.pixels ==
                             scrollInfo.metrics.maxScrollExtent) {
-                      _loadMore();
-                      setState(() {
-                        isLoading = true;
-                      });
+                      FutureBuilder(
+                        future:
+                            Provider.of<CheckNetwork>(context, listen: false)
+                                .connection,
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          print(snapshot.data);
+                          if (snapshot.data) {
+                            _loadMore();
+                            setState(() {
+                              isLoading = true;
+                            });
+                          }
+                          return;
+                        },
+                      );
                     }
                   },
                   child: ListView.builder(

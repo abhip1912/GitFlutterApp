@@ -38,6 +38,7 @@ class UsersProvider with ChangeNotifier {
       print(sinceCount);
       notifyListeners();
     }
+
     var url = 'https://api.github.com/users?since=$sinceCount';
     var resp = await http.get(Uri.parse(url));
     List<Users> users = [];
