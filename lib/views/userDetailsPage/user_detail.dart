@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:git_users/models/users.dart';
 import 'package:git_users/providers/user_provider.dart';
-import 'package:git_users/widgets/user_info.dart';
+import 'package:git_users/views/userDetailsPage/widgets/user_info.dart';
 import 'package:provider/provider.dart';
 
 class UserDetail extends StatefulWidget {

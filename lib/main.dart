@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:git_users/providers/user_provider.dart';
 import 'package:git_users/providers/users_provider.dart';
-import 'package:git_users/views/homepage.dart';
-import 'package:git_users/views/user_detail.dart';
+import 'package:git_users/views/homePage/homepage.dart';
+import 'package:git_users/views/userDetailsPage/user_detail.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());

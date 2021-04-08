@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:git_users/providers/users_provider.dart';
-import 'package:git_users/widgets/check_network.dart';
-import 'package:git_users/widgets/list_item.dart';
-import 'package:git_users/widgets/search_bar.dart';
+import 'package:git_users/views/homePage/widgets/check_network.dart';
+import 'package:git_users/views/homePage/widgets/list_item.dart';
+import 'package:git_users/views/homePage/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {

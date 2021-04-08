@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:git_users/models/users.dart';
-import 'package:git_users/views/user_detail.dart';
+import 'package:git_users/views/userDetailsPage/user_detail.dart';
 
 class ListItem extends StatelessWidget {
   final Users user;
