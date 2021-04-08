@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:git_users/DBHelper/users_db_helper.dart';
 
 class Users with ChangeNotifier {
   String login;
@@ -10,13 +11,21 @@ class Users with ChangeNotifier {
 
   Users();
 
+  var dbHelper = UsersDBHelper();
+
   void updateNote(String str) {
     _notes = str;
     print(_notes);
   }
 
-  String get userNote {
+  Future<String> userNote(int id) async {
+    _notes = await dbHelper.getNote(id);
     return _notes;
+  }
+
+  Future<void> setNote(int id, String txt) async {
+    await dbHelper.updateNote(id, txt);
+    return;
   }
 
   Users.fromJson(Map<String, dynamic> jsonData) {
