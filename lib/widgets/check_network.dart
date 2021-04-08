@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 
-class CheckNetwork with ChangeNotifier {
+class CheckNetwork {
   StreamSubscription<DataConnectionStatus> listener;
   var internetStatus = "Unknown";
   var contentmessage = "Unknown";
