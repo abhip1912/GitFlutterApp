@@ -43,7 +43,7 @@ class UsersDBHelper {
   // What will happed at the time of creation of database
   _onCreate(Database db, int version) async {
     await db.execute(
-        "CREATE TABLE $TABLE ($ID INTEGER PRIMARY KEY, $LOGIN TEXT, $AVATAR_URL TEXT, $URL TEXT, $TYPE TEXT, $NOTE TEXT)");
+        "CREATE TABLE $TABLE ($ID INTEGER PRIMARY KEY, $LOGIN TEXT, $AVATAR_URL TEXT, $URL TEXT, $TYPE TEXT, $NOTE TEXT DEFAULT '')");
   }
 
   //Insert the data into database
@@ -54,6 +54,17 @@ class UsersDBHelper {
       batch.insert(TABLE, element.toJson());
     });
     await batch.commit();
+  }
+
+  Future<void> updateNote(int id, String note) async {
+    var dbClient = await db;
+    await dbClient.rawUpdate("UPDATE $TABLE SET $NOTE = $note WHERE $ID=id");
+  }
+
+  Future<String> getNote(int id) async {
+    var dbClient = await db;
+    var s = await dbClient.rawQuery("SELECT $NOTE FROM $TABLE WHERE $ID=$id");
+    return s[0][NOTE];
   }
 
   // Get all the users
