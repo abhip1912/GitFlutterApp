@@ -21,7 +21,6 @@ class UserInfo with ChangeNotifier {
   int following;
   DateTime createdAt;
   DateTime updatedAt;
-  String _note = "";
 
   // User({
   //   this.login,
@@ -45,12 +44,7 @@ class UserInfo with ChangeNotifier {
   //   this.createdAt,
   //   this.updatedAt,
   // });
-
-  void updateNote(String txt) {
-    _note = txt;
-  }
-
-  String get note => _note;
+  //
 
   UserInfo.fromJson(Map<String, dynamic> jsonData) {
     login = jsonData["login"];
@@ -97,7 +91,6 @@ class UserInfo with ChangeNotifier {
       "following": following,
       "created_at": createdAt.toIso8601String(),
       "updated_at": updatedAt.toIso8601String(),
-      "note": _note,
     };
     return map;
   }

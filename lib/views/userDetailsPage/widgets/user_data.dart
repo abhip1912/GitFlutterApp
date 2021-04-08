@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:git_users/models/user_info.dart';
+import 'package:git_users/models/users.dart';
 import 'package:provider/provider.dart';
 
 class UserData extends StatelessWidget {
@@ -87,9 +88,8 @@ class UserData extends StatelessWidget {
               TextFormField(
                 initialValue: 'Hi',
                 maxLines: 5,
-                onChanged: (value) =>
-                    Provider.of<UserInfo>(context, listen: false)
-                        .updateNote(value),
+                onChanged: (value) => Provider.of<Users>(context, listen: false)
+                    .updateNote(value),
                 keyboardType: TextInputType.multiline,
               ),
             ],

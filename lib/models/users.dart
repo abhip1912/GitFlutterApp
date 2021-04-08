@@ -1,16 +1,23 @@
-class Users {
+import 'package:flutter/material.dart';
+
+class Users with ChangeNotifier {
   String login;
   int id;
   String avatarUrl;
   String url;
   String type;
+  String _notes = "";
 
-  // Users({
-  //   @required this.login,
-  //   @required this.id,
-  //   @required this.avatarUrl,
-  //   @required this.type,
-  // });
+  Users();
+
+  void updateNote(String str) {
+    _notes = str;
+    print(_notes);
+  }
+
+  String get userNote {
+    return _notes;
+  }
 
   Users.fromJson(Map<String, dynamic> jsonData) {
     login = jsonData['login'];

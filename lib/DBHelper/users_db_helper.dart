@@ -13,6 +13,7 @@ class UsersDBHelper {
   static const String AVATAR_URL = 'avatar_url';
   static const String URL = 'url';
   static const String TYPE = 'type';
+  static const String NOTE = 'notes';
   //Database-Table
   static const DB_NAME = 'users1.db';
   static const TABLE = 'Users';
@@ -42,7 +43,7 @@ class UsersDBHelper {
   // What will happed at the time of creation of database
   _onCreate(Database db, int version) async {
     await db.execute(
-        "CREATE TABLE $TABLE ($ID INTEGER PRIMARY KEY, $LOGIN TEXT, $AVATAR_URL TEXT, $URL TEXT, $TYPE TEXT)");
+        "CREATE TABLE $TABLE ($ID INTEGER PRIMARY KEY, $LOGIN TEXT, $AVATAR_URL TEXT, $URL TEXT, $TYPE TEXT, $NOTE TEXT)");
   }
 
   //Insert the data into database

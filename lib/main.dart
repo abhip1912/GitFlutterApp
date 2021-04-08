@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:git_users/models/users.dart';
 import 'package:git_users/providers/user_provider.dart';
 import 'package:git_users/providers/users_provider.dart';
 import 'package:git_users/views/homePage/homepage.dart';
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (ctx) => UsersProvider()),
         ChangeNotifierProvider(create: (ctx) => UserProvider()),
+        ChangeNotifierProvider(create: (ctx) => Users()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
