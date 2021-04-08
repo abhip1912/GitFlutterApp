@@ -6,12 +6,6 @@ class CheckNetwork with ChangeNotifier {
   StreamSubscription<DataConnectionStatus> listener;
   var internetStatus = "Unknown";
   var contentmessage = "Unknown";
-  bool _connection;
-
-  Future<bool> get connection async {
-    _connection = await DataConnectionChecker().hasConnection;
-    return _connection;
-  }
 
   void _showDialog(String title, String content, BuildContext context) {
     showDialog(
@@ -33,13 +27,10 @@ class CheckNetwork with ChangeNotifier {
   checkConnection(BuildContext context) async {
     listener = DataConnectionChecker().onStatusChange.listen((status) {
       if (status == DataConnectionStatus.disconnected) {
-        _connection = false;
         internetStatus = "You are disconnected to the Internet. ";
         contentmessage = "Please check your internet connection";
         _showDialog(internetStatus, contentmessage, context);
-      } else {
-        _connection = true;
-      }
+      } else {}
     });
     return await DataConnectionChecker().connectionStatus;
   }
