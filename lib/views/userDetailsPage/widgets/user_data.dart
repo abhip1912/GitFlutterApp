@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:git_users/models/user.dart';
 import 'package:provider/provider.dart';
 
-class UserInfo extends StatelessWidget {
+class UserData extends StatelessWidget {
   final User user;
-  UserInfo(this.user);
+  UserData(this.user);
   @override
   Widget build(BuildContext context) {
     return user == null

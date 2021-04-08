@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:git_users/models/users.dart';
 import 'package:git_users/providers/user_provider.dart';
-import 'package:git_users/views/userDetailsPage/widgets/user_info.dart';
+import 'package:git_users/views/userDetailsPage/widgets/user_data.dart';
 import 'package:provider/provider.dart';
 
 class UserDetail extends StatefulWidget {
@@ -43,7 +43,7 @@ class _UserDetailState extends State<UserDetail> {
               ),
             ),
             Consumer<UserProvider>(
-                builder: (_, data, ch) => UserInfo(data.userInfo[user.id])),
+                builder: (_, data, ch) => UserData(data.userInfo[user.id])),
           ],
         ),
       ),
