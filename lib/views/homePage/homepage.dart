@@ -39,6 +39,8 @@ class _HomePageState extends State<HomePage> {
     if (connection) {
       await Provider.of<UsersProvider>(context, listen: false)
           .fetchUsers(firstLoad);
+    } else {
+      Provider.of<UsersProvider>(context, listen: false).fetchDb();
     }
     setState(() {
       isLoading = false;

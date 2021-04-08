@@ -27,34 +27,38 @@ class UsersProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  fetchDB() async {}
+  Future<bool> fetchDb() async {
+    _users = await dbHelper.getUsers();
+    print("myLog: Data fetched from db....:" + _users.toString());
+    if (_users.length != 0) {
+      sinceCount = await dbHelper.getLastId();
+      notifyListeners();
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   fetchUsers(bool firstLoad) async {
-    var db = await dbHelper.db;
-    if (db != null) {
-      _users = await dbHelper.getUsers();
-      if (_users.length == 0) {
-        firstLoad = false;
-      }
-      var lastId = await dbHelper.getLastId();
-      sinceCount = lastId == null ? 0 : lastId;
-      notifyListeners();
+    if (firstLoad) {
+      firstLoad = await fetchDb();
     }
     if (!firstLoad) {
+      // print("Under !firstLoad condition passed");
       var url = 'https://api.github.com/users?since=$sinceCount';
       var resp = await http.get(Uri.parse(url));
-      List<Users> users = [];
       if (resp.statusCode == 200) {
+        List<Users> users = [];
         List<dynamic> usersJson = json.decode(resp.body);
         for (var userJson in usersJson) {
           users.add(Users.fromJson(userJson));
         }
-      }
-      if (users.length != 0) {
-        _users.addAll(users);
-        sinceCount = _users[_users.length - 1].id;
-        notifyListeners();
-        dbHelper.save(users);
+        if (users.length != 0) {
+          _users.addAll(users);
+          sinceCount = _users[_users.length - 1].id;
+          notifyListeners();
+          dbHelper.save(users);
+        }
       }
     }
   }
