@@ -29,7 +29,7 @@ class UsersProvider with ChangeNotifier {
 
   fetchDB() async {}
 
-  Future fetchUsers() async {
+  fetchUsers() async {
     var db = await dbHelper.db;
     if (db != null) {
       _users = await dbHelper.getUsers();

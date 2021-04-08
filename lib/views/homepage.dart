@@ -34,11 +34,13 @@ class _HomePageState extends State<HomePage> {
   bool isLoading = false;
 
   Future _loadMore() async {
-    await Provider.of<UsersProvider>(context, listen: false)
-        .fetchUsers()
-        .then((_) => setState(() {
-              isLoading = false;
-            }));
+    var connection = await DataConnectionChecker().hasConnection;
+    if (connection) {
+      await Provider.of<UsersProvider>(context, listen: false).fetchUsers();
+    }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -73,22 +75,10 @@ class _HomePageState extends State<HomePage> {
                         !isLoading &&
                         scrollInfo.metrics.pixels ==
                             scrollInfo.metrics.maxScrollExtent) {
-                      FutureBuilder(
-                        future:
-                            Provider.of<CheckNetwork>(context, listen: false)
-                                .connection,
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          print(snapshot.data);
-                          if (snapshot.data) {
-                            _loadMore();
-                            setState(() {
-                              isLoading = true;
-                            });
-                          }
-                          return;
-                        },
-                      );
+                      _loadMore();
+                      setState(() {
+                        isLoading = true;
+                      });
                     }
                   },
                   child: ListView.builder(
