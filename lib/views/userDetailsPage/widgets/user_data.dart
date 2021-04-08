@@ -86,10 +86,11 @@ class UserData extends StatelessWidget {
                 ]),
               ),
               TextFormField(
-                initialValue: 'Hi',
+                initialValue:
+                    'awaitProvider.of<Users>(context).userNote(user.id)',
                 maxLines: 5,
                 onChanged: (value) => Provider.of<Users>(context, listen: false)
-                    .updateNote(value),
+                    .setNote(user.id, value),
                 keyboardType: TextInputType.multiline,
               ),
             ],
