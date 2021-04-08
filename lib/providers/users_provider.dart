@@ -29,30 +29,34 @@ class UsersProvider with ChangeNotifier {
 
   fetchDB() async {}
 
-  fetchUsers() async {
+  fetchUsers(bool firstLoad) async {
     var db = await dbHelper.db;
     if (db != null) {
       _users = await dbHelper.getUsers();
+      if (_users.length == 0) {
+        firstLoad = false;
+      }
       var lastId = await dbHelper.getLastId();
       sinceCount = lastId == null ? 0 : lastId;
       print(sinceCount);
       notifyListeners();
     }
-
-    var url = 'https://api.github.com/users?since=$sinceCount';
-    var resp = await http.get(Uri.parse(url));
-    List<Users> users = [];
-    if (resp.statusCode == 200) {
-      List<dynamic> usersJson = json.decode(resp.body);
-      for (var userJson in usersJson) {
-        users.add(Users.fromJson(userJson));
+    if (!firstLoad) {
+      var url = 'https://api.github.com/users?since=$sinceCount';
+      var resp = await http.get(Uri.parse(url));
+      List<Users> users = [];
+      if (resp.statusCode == 200) {
+        List<dynamic> usersJson = json.decode(resp.body);
+        for (var userJson in usersJson) {
+          users.add(Users.fromJson(userJson));
+        }
       }
-    }
-    if (users.length != 0) {
-      _users.addAll(users);
-      sinceCount = _users[_users.length - 1].id;
-      notifyListeners();
-      dbHelper.save(users);
+      if (users.length != 0) {
+        _users.addAll(users);
+        sinceCount = _users[_users.length - 1].id;
+        notifyListeners();
+        dbHelper.save(users);
+      }
     }
   }
 }

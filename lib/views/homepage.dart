@@ -16,12 +16,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
     CheckNetwork().checkConnection(context);
     setState(() {
-      Provider.of<UsersProvider>(context, listen: false).fetchUsers();
+      isLoading = true;
+      _loadMore(true);
     });
   }
 
@@ -31,12 +34,11 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  bool isLoading = false;
-
-  Future _loadMore() async {
+  Future _loadMore(bool firstLoad) async {
     var connection = await DataConnectionChecker().hasConnection;
     if (connection) {
-      await Provider.of<UsersProvider>(context, listen: false).fetchUsers();
+      await Provider.of<UsersProvider>(context, listen: false)
+          .fetchUsers(firstLoad);
     }
     setState(() {
       isLoading = false;
@@ -75,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                         !isLoading &&
                         scrollInfo.metrics.pixels ==
                             scrollInfo.metrics.maxScrollExtent) {
-                      _loadMore();
+                      _loadMore(false);
                       setState(() {
                         isLoading = true;
                       });
