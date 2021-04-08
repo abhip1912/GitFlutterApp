@@ -56,6 +56,7 @@ class DBHelper {
   }
 
   // Get all the users
+  // I'm returning all the data from the database, if I have big database, it is not recommeded way.
   Future<List<Users>> getUsers() async {
     var dbClient = await db;
     //Fetch all the users in json form

@@ -86,9 +86,10 @@ class UserInfo extends StatelessWidget {
               ),
               TextFormField(
                 initialValue: 'Hi',
-                onFieldSubmitted: (value) =>
+                maxLines: 5,
+                onChanged: (value) =>
                     Provider.of<User>(context, listen: false).updateNote(value),
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.multiline,
               ),
             ],
           );
