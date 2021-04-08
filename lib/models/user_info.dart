@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class User with ChangeNotifier {
+class UserInfo with ChangeNotifier {
   String login;
   int id;
   String nodeId;
@@ -52,7 +52,7 @@ class User with ChangeNotifier {
 
   String get note => _note;
 
-  User.fromJson(Map<String, dynamic> jsonData) {
+  UserInfo.fromJson(Map<String, dynamic> jsonData) {
     login = jsonData["login"];
     id = jsonData["id"];
     nodeId = jsonData["node_id"];

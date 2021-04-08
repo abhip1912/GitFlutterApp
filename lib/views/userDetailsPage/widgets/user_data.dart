@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:git_users/models/user.dart';
+import 'package:git_users/models/user_info.dart';
 import 'package:provider/provider.dart';
 
 class UserData extends StatelessWidget {
-  final User user;
+  final UserInfo user;
   UserData(this.user);
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,8 @@ class UserData extends StatelessWidget {
                 initialValue: 'Hi',
                 maxLines: 5,
                 onChanged: (value) =>
-                    Provider.of<User>(context, listen: false).updateNote(value),
+                    Provider.of<UserInfo>(context, listen: false)
+                        .updateNote(value),
                 keyboardType: TextInputType.multiline,
               ),
             ],

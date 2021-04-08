@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:git_users/DBHelper/db_helper.dart';
+import 'package:git_users/DBHelper/users_db_helper.dart';
 import 'package:git_users/models/users.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,7 +9,7 @@ class UsersProvider with ChangeNotifier {
   String userName = '';
   List<Users> _users = [];
 
-  var dbHelper = DBHelper();
+  var dbHelper = UsersDBHelper();
 
   List<Users> get users {
     return _users.where((element) => element.login.contains(userName)).toList();
