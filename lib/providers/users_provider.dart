@@ -38,7 +38,6 @@ class UsersProvider with ChangeNotifier {
       }
       var lastId = await dbHelper.getLastId();
       sinceCount = lastId == null ? 0 : lastId;
-      print(sinceCount);
       notifyListeners();
     }
     if (!firstLoad) {
