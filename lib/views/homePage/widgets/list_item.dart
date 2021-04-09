@@ -40,19 +40,7 @@ class _ListItemState extends State<ListItem> {
             .pushNamed(UserDetail.routeName, arguments: widget.user),
         child: Card(
           child: ListTile(
-            trailing: FutureBuilder(
-              future: Provider.of<Users>(context).userNote(widget.user.id),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Icon(null);
-                } else {
-                  if (isUserNoteEmpty(snapshot.data)) {
-                    return Icon(Icons.note);
-                  }
-                  return Icon(null);
-                }
-              },
-            ),
+            trailing: userNote.length > 0 ? Icon(Icons.note) : Icon(null),
             title: Text(widget.user.login),
             subtitle: Text("${widget.user.id}-${widget.user.type}"),
             leading: CircleAvatar(
