@@ -95,6 +95,8 @@ class UserData extends StatelessWidget {
                       return CircularProgressIndicator();
                     } else {
                       return TextFormField(
+                        decoration:
+                            InputDecoration(hintText: "Save Your Note..."),
                         initialValue: snapshot.data,
                         maxLines: 5,
                         onChanged: (value) =>
