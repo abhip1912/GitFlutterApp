@@ -13,11 +13,6 @@ class Users with ChangeNotifier {
 
   var dbHelper = UsersDBHelper();
 
-  void updateNote(String str) {
-    _notes = str;
-    print(_notes);
-  }
-
   Future<String> userNote(int id) async {
     _notes = await dbHelper.getNote(id);
     return _notes;
@@ -25,6 +20,7 @@ class Users with ChangeNotifier {
 
   Future<void> setNote(int id, String txt) async {
     await dbHelper.updateNote(id, txt);
+    notifyListeners();
     return;
   }
 

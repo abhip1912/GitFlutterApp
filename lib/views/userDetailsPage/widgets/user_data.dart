@@ -85,13 +85,26 @@ class UserData extends StatelessWidget {
                   )
                 ]),
               ),
-              TextFormField(
-                initialValue:
-                    'awaitProvider.of<Users>(context).userNote(user.id)',
-                maxLines: 5,
-                onChanged: (value) => Provider.of<Users>(context, listen: false)
-                    .setNote(user.id, value),
-                keyboardType: TextInputType.multiline,
+              Container(
+                margin: EdgeInsets.all(20),
+                child: FutureBuilder(
+                  future: Provider.of<Users>(context, listen: false)
+                      .userNote(user.id),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else {
+                      return TextFormField(
+                        initialValue: snapshot.data,
+                        maxLines: 5,
+                        onChanged: (value) =>
+                            Provider.of<Users>(context, listen: false)
+                                .setNote(user.id, value),
+                        keyboardType: TextInputType.multiline,
+                      );
+                    }
+                  },
+                ),
               ),
             ],
           );

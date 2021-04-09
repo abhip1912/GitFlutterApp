@@ -58,7 +58,7 @@ class UsersDBHelper {
 
   Future<void> updateNote(int id, String note) async {
     var dbClient = await db;
-    await dbClient.rawUpdate("UPDATE $TABLE SET $NOTE = $note WHERE $ID=id");
+    await dbClient.rawUpdate('UPDATE $TABLE SET $NOTE = "$note" WHERE $ID=$id');
   }
 
   Future<String> getNote(int id) async {

@@ -29,7 +29,6 @@ class UsersProvider with ChangeNotifier {
 
   Future<bool> fetchDb() async {
     _users = await dbHelper.getUsers();
-    print("myLog: Data fetched from db....:" + _users.toString());
     if (_users.length != 0) {
       sinceCount = await dbHelper.getLastId();
       notifyListeners();
@@ -44,7 +43,6 @@ class UsersProvider with ChangeNotifier {
       firstLoad = await fetchDb();
     }
     if (!firstLoad) {
-      // print("Under !firstLoad condition passed");
       var url = 'https://api.github.com/users?since=$sinceCount';
       var resp = await http.get(Uri.parse(url));
       if (resp.statusCode == 200) {
